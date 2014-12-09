@@ -1,0 +1,14 @@
+PODS:
+  - TCTableViewSearchController (0.1.0)
+
+DEPENDENCIES:
+  - TCTableViewSearchController (from `../`)
+
+EXTERNAL SOURCES:
+  TCTableViewSearchController:
+    :path: ../
+
+SPEC CHECKSUMS:
+  TCTableViewSearchController: e86f1adfc48c9e499d5b0bf05354a92e808984da
+
+COCOAPODS: 0.35.0
