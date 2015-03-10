@@ -30,11 +30,11 @@ In any UITableViewDataSource or UITableViewDelegate method that acts on an objec
 ```objective-c
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-if (!self.searchController.active) {
-// return the count of your main data source
-} else {
-// return the count of the filteredResults property of TCTableViewSearchController
-}
+  if (!self.searchController.active) {
+    // return the count of your main data source
+  } else {
+    // return the count of the filteredResults property of TCTableViewSearchController
+  }
 }
 
 ```
@@ -46,9 +46,9 @@ To keep things simple, there is only one method required to search object data i
 ```objective-c
 
 - (void)updateSearchResultsForSearchingTableViewController:(TCTableViewSearchController *)searchingTableViewController withCompletion:(TCSearchBlock)completion {
-// Provide the properties of the objects in the table that you wish to search. Currently only supports NSStrings and NSNumbers.
-NSArray *propertiesArray = [NSArray arrayWithObjects:@"name", @"breed", @"ownerName", @"birthYear", nil]; // These are the properties of the TCDog object represented in string form
-completion(self.dogArray, propertiesArray, [TCDog dog]);  // The data source, the properties to search, and an example object that will be searched.
+  // Provide the properties of the objects in the table that you wish to search. Currently only supports NSStrings and NSNumbers.
+  NSArray *propertiesArray = [NSArray arrayWithObjects:@"name", @"breed", @"ownerName", @"birthYear", nil]; // These are the properties of the TCDog object represented in string form
+  completion(self.dogArray, propertiesArray, [TCDog dog]);  // The data source, the properties to search, and an example object that will be searched.
 }
 
 ```
@@ -60,7 +60,7 @@ If a scope bar is desired, then you will likely be searching two or more propert
 ```objective-c
 
 - (NSArray *)scopeBarTitles {
-return @[@"All", @"Name", @"Breed", @"Owner", @"Birth Year"];
+  return @[@"All", @"Name", @"Breed", @"Owner", @"Birth Year"];
 }
 
 ```
