@@ -9,10 +9,10 @@
 
 Pod::Spec.new do |s|
   s.name             = "TCTableViewSearchController"
-  s.version          = "0.1.0"
+  s.version          = "0.1.1"
   s.summary          = "A subclass of UITableViewController that handles basic search bar functionality to make searching a table a painless process."
   s.description      = <<-DESC
-                       Sometimes all you want is a table view that will handle most of the basic searching for you. That's where TCTableViewSearchController comes in. It handles most of the UISearchController requirements for you. All that you will need to do is implement one method that tells it which properties to search in the objects populatiung your table view. Currently only supports searching strings and numbers. Also has basic, optional, scope bar support.
+                       Sometimes all you want is a table view that will handle most of the basic searching for you. That's where TCTableViewSearchController comes in. It handles most of the UISearchController requirements for you. All that you will need to do is implement one method that tells it which properties to search in the objects populating your table view. Currently only supports searching NSStrings and NSNumbers. Also has basic (optional) scope bar support.
 
                        **This includes a demo project to show you the ropes. See the README file for usage instructions.**
                        DESC
