@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  TCTableViewSearchController: e86f1adfc48c9e499d5b0bf05354a92e808984da
+  TCTableViewSearchController: 221963f45b160e89aa91fe9fb187d82041afc290
 
 COCOAPODS: 0.35.0

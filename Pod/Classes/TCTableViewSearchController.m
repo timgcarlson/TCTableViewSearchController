@@ -104,10 +104,18 @@
     if (strippedStr.length > 0) {
         searchItems = [strippedStr componentsSeparatedByString:@" "];
     }
+    
+    // Prevent a retain cycle if the following completion block is assigned to a property by the user
+    __weak typeof(self) weakSelf = self;
 
     if ([self.delegate respondsToSelector:@selector(updateSearchResultsForSearchingTableViewController:withCompletion:)]) {
         // This will be where the user updates the search predicates
         [self.delegate updateSearchResultsForSearchingTableViewController:self withCompletion:^(NSArray *items, NSArray *properties, id exampleObject) {
+            __strong typeof(self) strongSelf = weakSelf;
+            if (!strongSelf) {
+                return;
+            }
+            
             NSMutableArray *searchResults = [NSMutableArray arrayWithArray:items];
             NSMutableArray *andMatchPredicates = [NSMutableArray array];
             
@@ -118,19 +126,19 @@
                 // SCOPE BAR
                 BOOL isUsingScopeBar = NO;
                 NSMutableSet *predicatesToInclude = [NSMutableSet set];
-                if (self.searchController.searchBar.scopeButtonTitles) {
-                    NSUInteger scopeCount = self.searchController.searchBar.scopeButtonTitles.count;
+                if (strongSelf.searchController.searchBar.scopeButtonTitles) {
+                    NSUInteger scopeCount = strongSelf.searchController.searchBar.scopeButtonTitles.count;
                     if (scopeCount - 1 == properties.count) {
                         // Scope count is greater by 1 from properties count because of the "All" search that must be at the first index.
                         isUsingScopeBar = YES;
-                        if (self.searchController.searchBar.selectedScopeButtonIndex == 0) {
+                        if (strongSelf.searchController.searchBar.selectedScopeButtonIndex == 0) {
                             // Will use all the predicates...
                             for (int i = 0; i < properties.count; i++) {
                                 [predicatesToInclude addObject:@(i)];
                             }
                         } else {
                             // Will only use the predicate for property
-                            [predicatesToInclude addObject:@(self.searchController.searchBar.selectedScopeButtonIndex - 1)];
+                            [predicatesToInclude addObject:@(strongSelf.searchController.searchBar.selectedScopeButtonIndex - 1)];
                         }
                     } else {
                         @try {
@@ -148,14 +156,14 @@
 
                 
                 int index, numberOfPredicates;
-                if (!isUsingScopeBar || (isUsingScopeBar && self.searchController.searchBar.selectedScopeButtonIndex == 0)) {
+                if (!isUsingScopeBar || (isUsingScopeBar && strongSelf.searchController.searchBar.selectedScopeButtonIndex == 0)) {
                     // Search all properties
                     index = 0;
                     numberOfPredicates = (int)properties.count;
                 } else {
                     // Search only the one property. For loop will only execute once.
-                    index = (int)self.searchController.searchBar.selectedScopeButtonIndex - 1;
-                    numberOfPredicates = (int)self.searchController.searchBar.selectedScopeButtonIndex;
+                    index = (int)strongSelf.searchController.searchBar.selectedScopeButtonIndex - 1;
+                    numberOfPredicates = (int)strongSelf.searchController.searchBar.selectedScopeButtonIndex;
                 }
 
                 for (int i = index; i < numberOfPredicates; i++) {
@@ -203,8 +211,8 @@
             searchResults = [[searchResults filteredArrayUsingPredicate:finalCompoundPredicate] mutableCopy];
             
             // Pass the filtered results to our search results table
-            self.filteredResults = searchResults;
-            [self.tableView reloadData];
+            strongSelf.filteredResults = searchResults;
+            [strongSelf.tableView reloadData];
         }];
     }
 }
